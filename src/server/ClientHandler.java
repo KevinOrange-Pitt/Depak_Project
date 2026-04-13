@@ -39,6 +39,15 @@ public class ClientHandler implements Runnable {
                 username = "Anonymous";
             }
 
+            // Reject HTTP requests (e.g. browsers probing the port)
+            if (username.startsWith("GET ") || username.startsWith("POST ")
+                    || username.startsWith("HEAD ") || username.startsWith("OPTIONS ")) {
+                out.print("HTTP/1.1 400 Bad Request\r\n\r\nThis is a chat server, not an HTTP server.\r\n");
+                out.flush();
+                System.out.println("Rejected HTTP probe from " + socket.getInetAddress());
+                return;
+            }
+
             System.out.println(username + " joined the chat.");
             ChatServer.broadcast("[" + username + " has joined the chat]", this);
             sendMessage("[You have joined the chat as: " + username + "]");

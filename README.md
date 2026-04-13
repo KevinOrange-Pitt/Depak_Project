@@ -47,22 +47,39 @@ You should see:
 Chat server started on port 12345
 ```
 
-### 3 — Each teammate launches a client
+### 3 — Find the server's IP address
 
-On every machine that wants to join the chat room:
+On the machine running the server, find its local IP:
 
 ```bash
+# macOS / Linux
+ipconfig getifaddr en0        # Wi-Fi
+# or
+hostname -I                   # Linux fallback
+```
+
+Share that IP with your teammates (e.g. `192.168.1.42`).
+
+### 4 — Each teammate clones and launches a client
+
+```bash
+git clone <repo-url>
+cd Depak_Project
+./compile.sh
 ./run_client.sh
 ```
 
 A login dialog will appear:
 
-* **Server host** — IP address or hostname of the machine running the server  
-  (use `localhost` if the client is on the same machine as the server)
+* **Server host** — the IP address from step 3  
+  (use `localhost` only if running on the same machine as the server)
 * **Port** — `12345` (default, matches the server)
 * **Username** — the name that will be shown next to your messages
 
 Click **OK** to enter the chat room.
+
+> **Same network required** — all machines must be on the same Wi-Fi/LAN, or the
+> server port must be forwarded if connecting over the internet.
 
 ---
 

@@ -9,15 +9,15 @@ import javax.swing.border.*;
 import javax.swing.text.*;
 
 /**
- * Hello Kitty themed Swing chat client.
+ * Persona 3 – themed Swing chat client.
  *
- * Dark rose palette with pink / pastel accents.
+ * Dark navy palette with teal / cyan accents.
  * Uses a StyledDocument so each message line gets its own colour.
  */
 public class ChatClient extends JFrame {
 
     // -----------------------------------------------------------------------
-    // Hello Kitty colour palette
+    // Persona 3 colour palette
     // -----------------------------------------------------------------------
     private static final Color BG_DEEP      = new Color(0x1A, 0x0A, 0x12); // deep dark rose background
     private static final Color BG_SURFACE   = new Color(0x2B, 0x11, 0x1E); // input field + bubbles
@@ -32,13 +32,13 @@ public class ChatClient extends JFrame {
 
     // Rotate through these for other users' name labels
     private static final Color[] SENDER_COLORS = {
-        new Color(0xFF, 0x8E, 0xC8), // hot pink
-        new Color(0xFF, 0xB7, 0xD5), // bubblegum
-        new Color(0xE8, 0xA0, 0xFF), // lavender
-        new Color(0xFF, 0xD1, 0x6E), // warm gold
-        new Color(0xA8, 0xE6, 0xFF), // baby blue (hello kitty ribbon blue)
+    new Color(0xFF, 0x8E, 0xC8), // hot pink
+    new Color(0xFF, 0xB7, 0xD5), // bubblegum
+    new Color(0xE8, 0xA0, 0xFF), // lavender
+    new Color(0xFF, 0xD1, 0x6E), // warm gold
+    new Color(0xA8, 0xE6, 0xFF), // baby blue (hello kitty ribbon blue)
     };
-
+    
     // -----------------------------------------------------------------------
     // Instance state
     // -----------------------------------------------------------------------
@@ -241,7 +241,14 @@ public class ChatClient extends JFrame {
     // Message rendering
     // -----------------------------------------------------------------------
 
+    /**
+     * Parses lines in the format "Username: message body" and applies
+     * per-sender colour to the name label, with muted body text.
+     * Lines that don't match (system events) are rendered as centred notices.
+     */
     private void appendMessage(String raw) {
+        // Detect system / join / leave lines (no colon separator typical of
+        // broadcast format, or explicit bracket notation)
         if (raw.startsWith("[") || !raw.contains(": ")) {
             appendSystemMessage(raw);
             return;
@@ -256,7 +263,7 @@ public class ChatClient extends JFrame {
         Color bodyColor = isOwn ? TEXT_OWN    : TEXT_PRIMARY;
 
         try {
-            // Left accent rule
+            // Left accent rule (3-px coloured spacer via tab stop trick)
             SimpleAttributeSet accent = new SimpleAttributeSet();
             StyleConstants.setBackground(accent, nameColor);
             StyleConstants.setForeground(accent, nameColor);
@@ -325,21 +332,16 @@ public class ChatClient extends JFrame {
     // -----------------------------------------------------------------------
 
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        SwingUtilities.invokeLater(ChatClient::showLoginDialog);
+    try {
+        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-
+    SwingUtilities.invokeLater(ChatClient::showLoginDialog);
+}
     private static void showLoginDialog() {
-<<<<<<< HEAD
-        JDialog dialog = new JDialog((Frame) null, "Dark Hour — Connect", true);
-=======
         // ---- Style the dialog itself ----
-        JDialog dialog = new JDialog((Frame) null, "Deepak's Room — Connect", true);
->>>>>>> 039fdb232025ddb6db0f24b629377704d981cc0b
+        JDialog dialog = new JDialog((Frame) null, "Dark Hour — Connect", true);
         dialog.setSize(360, 310);
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
@@ -351,7 +353,7 @@ public class ChatClient extends JFrame {
         root.setBorder(BorderFactory.createEmptyBorder(24, 28, 20, 28));
 
         // Title
-        JLabel titleLabel = new JLabel("Deepak's Room");
+        JLabel titleLabel = new JLabel("Deepaks's Room");
         titleLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         titleLabel.setForeground(ACCENT_TEAL);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -470,10 +472,10 @@ public class ChatClient extends JFrame {
 
     private static class DarkScrollBarUI extends javax.swing.plaf.basic.BasicScrollBarUI {
         @Override protected void configureScrollBarColors() {
-            thumbColor            = BORDER_DIM;
-            trackColor            = BG_DEEP;
-            thumbDarkShadowColor  = BG_DEEP;
-            thumbHighlightColor   = BG_DEEP;
+            thumbColor      = BORDER_DIM;
+            trackColor      = BG_DEEP;
+            thumbDarkShadowColor = BG_DEEP;
+            thumbHighlightColor  = BG_DEEP;
             thumbLightShadowColor = BG_DEEP;
         }
         @Override protected JButton createDecreaseButton(int o) { return zeroButton(); }

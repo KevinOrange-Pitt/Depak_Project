@@ -121,7 +121,7 @@ run_client.sh            # Starts a client GUI
 Edit the constant in `src/server/ChatServer.java`:
 
 ```java
-static final int PORT = 12345;   // ← change this
+static final int PORT = 12345;   // ← our custom port
 ```
 
 Then re-compile and update the port in the client login dialog.

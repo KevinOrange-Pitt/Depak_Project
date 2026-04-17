@@ -1,42 +1,42 @@
 package client;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.text.*;
 
 /**
- * Persona 3 – themed Swing chat client.
+ * Hello Kitty themed Swing chat client.
  *
- * Dark navy palette with teal / cyan accents.
+ * Dark rose palette with pink / pastel accents.
  * Uses a StyledDocument so each message line gets its own colour.
  */
 public class ChatClient extends JFrame {
 
     // -----------------------------------------------------------------------
-    // Persona 3 colour palette
+    // Hello Kitty colour palette
     // -----------------------------------------------------------------------
-    private static final Color BG_DEEP      = new Color(0x0A, 0x15, 0x20); // darkest navy
-    private static final Color BG_SURFACE   = new Color(0x0D, 0x20, 0x35); // message bubbles / inputs
-    private static final Color BG_PANEL     = new Color(0x07, 0x15, 0x25); // header / footer
-    private static final Color ACCENT_TEAL  = new Color(0x4D, 0xA6, 0xD4); // primary accent
-    private static final Color ACCENT_GREEN = new Color(0x5D, 0xCA, 0xA5); // "online" / join events
-    private static final Color ACCENT_PURP  = new Color(0xAF, 0xA9, 0xEC); // alt sender colour
-    private static final Color BORDER_DIM   = new Color(0x1D, 0x3A, 0x55); // subtle border
-    private static final Color TEXT_PRIMARY = new Color(0xE8, 0xF4, 0xFD); // main text
-    private static final Color TEXT_MUTED   = new Color(0x7B, 0xAF, 0xC8); // timestamps / hints
-    private static final Color TEXT_OWN     = new Color(0xC8, 0xDF, 0xE8); // your own messages
+    private static final Color BG_DEEP      = new Color(0x1A, 0x0A, 0x12); // deep dark rose background
+    private static final Color BG_SURFACE   = new Color(0x2B, 0x11, 0x1E); // input field + bubbles
+    private static final Color BG_PANEL     = new Color(0x13, 0x07, 0x0F); // header + footer bar
+    private static final Color ACCENT_TEAL  = new Color(0xFF, 0x8E, 0xC8); // primary accent — hot pink
+    private static final Color ACCENT_GREEN = new Color(0xFF, 0xB7, 0xD5); // soft bubblegum pink
+    private static final Color ACCENT_PURP  = new Color(0xE8, 0xA0, 0xFF); // pastel lavender
+    private static final Color BORDER_DIM   = new Color(0x5C, 0x1F, 0x3A); // muted rose border
+    private static final Color TEXT_PRIMARY = new Color(0xFF, 0xEC, 0xF5); // near-white with pink tint
+    private static final Color TEXT_MUTED   = new Color(0xC9, 0x7A, 0xA8); // dusty mauve
+    private static final Color TEXT_OWN     = new Color(0xFF, 0xD6, 0xEE); // soft pink for your messages
 
     // Rotate through these for other users' name labels
     private static final Color[] SENDER_COLORS = {
-        ACCENT_TEAL,
-        ACCENT_GREEN,
-        ACCENT_PURP,
-        new Color(0xD4, 0x53, 0x7E), // pink
-        new Color(0xEF, 0x9F, 0x27), // amber
+        new Color(0xFF, 0x8E, 0xC8), // hot pink
+        new Color(0xFF, 0xB7, 0xD5), // bubblegum
+        new Color(0xE8, 0xA0, 0xFF), // lavender
+        new Color(0xFF, 0xD1, 0x6E), // warm gold
+        new Color(0xA8, 0xE6, 0xFF), // baby blue (hello kitty ribbon blue)
     };
 
     // -----------------------------------------------------------------------
@@ -213,7 +213,7 @@ public class ChatClient extends JFrame {
         sendBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         sendBtn.addMouseListener(new MouseAdapter() {
             @Override public void mouseEntered(MouseEvent e) {
-                sendBtn.setBackground(new Color(0x0F, 0x3A, 0x5A));
+                sendBtn.setBackground(new Color(0x5C, 0x1F, 0x3A)); // pink hover
             }
             @Override public void mouseExited(MouseEvent e) {
                 sendBtn.setBackground(BG_SURFACE);
@@ -241,14 +241,7 @@ public class ChatClient extends JFrame {
     // Message rendering
     // -----------------------------------------------------------------------
 
-    /**
-     * Parses lines in the format "Username: message body" and applies
-     * per-sender colour to the name label, with muted body text.
-     * Lines that don't match (system events) are rendered as centred notices.
-     */
     private void appendMessage(String raw) {
-        // Detect system / join / leave lines (no colon separator typical of
-        // broadcast format, or explicit bracket notation)
         if (raw.startsWith("[") || !raw.contains(": ")) {
             appendSystemMessage(raw);
             return;
@@ -263,7 +256,7 @@ public class ChatClient extends JFrame {
         Color bodyColor = isOwn ? TEXT_OWN    : TEXT_PRIMARY;
 
         try {
-            // Left accent rule (3-px coloured spacer via tab stop trick)
+            // Left accent rule
             SimpleAttributeSet accent = new SimpleAttributeSet();
             StyleConstants.setBackground(accent, nameColor);
             StyleConstants.setForeground(accent, nameColor);
@@ -332,15 +325,15 @@ public class ChatClient extends JFrame {
     // -----------------------------------------------------------------------
 
     public static void main(String[] args) {
-    try {
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-    } catch (Exception e) {
-        e.printStackTrace();
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        SwingUtilities.invokeLater(ChatClient::showLoginDialog);
     }
-    SwingUtilities.invokeLater(ChatClient::showLoginDialog);
-}
+
     private static void showLoginDialog() {
-        // ---- Style the dialog itself ----
         JDialog dialog = new JDialog((Frame) null, "Dark Hour — Connect", true);
         dialog.setSize(360, 310);
         dialog.setResizable(false);
@@ -353,7 +346,7 @@ public class ChatClient extends JFrame {
         root.setBorder(BorderFactory.createEmptyBorder(24, 28, 20, 28));
 
         // Title
-        JLabel titleLabel = new JLabel("Deepaks's Room");
+        JLabel titleLabel = new JLabel("Deepak's Room");
         titleLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         titleLabel.setForeground(ACCENT_TEAL);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -382,7 +375,7 @@ public class ChatClient extends JFrame {
         JButton connectBtn = new JButton("CONNECT");
         connectBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         connectBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
-        connectBtn.setBackground(new Color(0x0F, 0x3A, 0x5A));
+        connectBtn.setBackground(new Color(0x5C, 0x1F, 0x3A)); // pink
         connectBtn.setForeground(ACCENT_TEAL);
         connectBtn.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
         connectBtn.setBorder(new CompoundBorder(
@@ -472,10 +465,10 @@ public class ChatClient extends JFrame {
 
     private static class DarkScrollBarUI extends javax.swing.plaf.basic.BasicScrollBarUI {
         @Override protected void configureScrollBarColors() {
-            thumbColor      = BORDER_DIM;
-            trackColor      = BG_DEEP;
-            thumbDarkShadowColor = BG_DEEP;
-            thumbHighlightColor  = BG_DEEP;
+            thumbColor            = BORDER_DIM;
+            trackColor            = BG_DEEP;
+            thumbDarkShadowColor  = BG_DEEP;
+            thumbHighlightColor   = BG_DEEP;
             thumbLightShadowColor = BG_DEEP;
         }
         @Override protected JButton createDecreaseButton(int o) { return zeroButton(); }

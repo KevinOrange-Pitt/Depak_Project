@@ -1,4 +1,4 @@
-# Depak_Project — Java Chat Room
+# Deepak_Project — Java Chat Room
 
 A simple **client–server chat application** written in Java.  
 Multiple teammates can log in to a shared chat room and exchange messages in real time.

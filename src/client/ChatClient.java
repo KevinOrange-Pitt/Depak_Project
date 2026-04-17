@@ -341,7 +341,7 @@ public class ChatClient extends JFrame {
 }
     private static void showLoginDialog() {
         // ---- Style the dialog itself ----
-        JDialog dialog = new JDialog((Frame) null, "Dark Hour — Connect", true);
+        JDialog dialog = new JDialog((Frame) null, "Deepak's Room — Connect", true);
         dialog.setSize(360, 310);
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
